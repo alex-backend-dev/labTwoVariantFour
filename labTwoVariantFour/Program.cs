@@ -1,46 +1,46 @@
-﻿using System;
+using System;
 
-namespace labTwoVariantFour
+namespace firstTaskThirdLab
 {
     public class Program
     {
-        public static double Function(double x)
-        {
-            return x - 2 * Math.Sin(1 / x);
-        }
-
         public static void Main(string[] args)
         {
-            Console.Write("Введите вашу точность: ");
-            double eps = double.Parse(Console.ReadLine());
+            Console.Write("Введите точность: ");
+            double precision = double.Parse(Console.ReadLine());
 
-            Console.Write("Введите начало отрезка: ");
-            double a = double.Parse(Console.ReadLine());
+            Console.Write("Введите значение \"x\": ");
+            double x = double.Parse(Console.ReadLine());
 
-            Console.Write("Введите конец отрезка: ");
-            double b = double.Parse(Console.ReadLine());
-
-            double c;
-
-            while (Math.Abs(b - a) > eps)
-            {
-                c = (a + b) / 2;
-
-                if ((Function(a) * Function(c)) < 0)
-                {
-                    b = c;
-                }
-
-                else
-                {
-                    a = c;
-                }
-            }
-
-            Console.Write("Корень уравнения на заданном отрезке равен: " + (a + b) / 2 );
+            Console.WriteLine("Сумма равна: " + GetSum(x, precision));
 
             Console.ReadLine();
+        }
 
+        public static double GetSum(double x, double precision)
+        {
+            double sum = 0;
+            double term;
+
+            for (int n = 0; ; n++)
+            {
+                term = Math.Pow(-1, n) * (Math.Pow(x, (2 * n + 1)) / GetFactorial(2 * n + 1));
+
+                if (Math.Abs(term) < precision)
+                    break;
+
+                sum += term;
+            }
+
+            return sum;
+        }
+
+        public static int GetFactorial(int n)
+        {
+            if (n == 0 || n == 1)
+                return 1;
+
+            return n * GetFactorial(n - 1);
         }
     }
 }
